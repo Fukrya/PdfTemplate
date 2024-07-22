@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .editable {
+            border: 1px dotted black;
+        }
+
+        .chart-input-container {
+            margin-bottom: 10px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            text-align: left;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+
+        }
+
+        .tb2 td,
+        th {
+            border: 1px solid #1C378B;
+            text-align: left;
+            padding: 1px;
+            padding-left: 4px;
+        }
+
+        .tb2 td:nth-child(1) {
+            background-color: #E7E6E6;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            border: 1px solid blue;
+        }
+
+        .dataset-input-group {
+            margin-bottom: 20px;
+        }
+
+        .data-input-group {
+            margin-bottom: 10px;
+        }
+
+        .chart-data-input {
+            margin-left: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div style="margin-left: 20%; margin-right: 20%; margin-top: 5%; border: 2px solid black; padding: 2%;">
+
+        <!-- Edit and Save buttons -->
+        <button id="editButton" onclick="toggleEditMode()">Edit</button>
+        <button id="saveButton" class="hidden" onclick="saveChanges()">Save</button><br><br>
+        <button id="cancelButton" class="hidden" onclick="cancelEdit()">Cancel</button>
+
+        <!-- Content to be edited -->
+        <div id="content">
+            <!-- page 1 -->
+            <br>
+            <br>
+            <br>
+            <input type="file" id="logo" name="logo" accept="image/png, image/jpeg">
+
+            <div style="display:flex; justify-content: end; gap: 1%;">
+
+                <div style=" background-color: #3B5199; width: 20px; height: 100px;">
+
+                </div>
+                <div style=" background-color: #3B5199; width: 400px; height: 100px;">
+                    <p style="font-size: larger; color: white;padding-left: 2%;font-family: sans-serif">NOME CLIENTE</p>
+                    <p style="font-size: larger; color: white;padding-left: 2%;font-family: sans-serif">Vulnerability
+                        Assessment Interno</p>
+                </div>
+
+            </div>
+            <!-- Page 2 -->
+            <div>
+                <h1 style="text-align: center;">This is page 2</h1>
+                <h3 id="scopeTitle" style="color: #27368c;">SCOPO DEL DOCUMENTO</h3>
+                <hr style="border: 1px solid #27368c;" />
+                <p id="scopeDescription">Il documento ha lo scopo di riassumere l’attività di “Vulnerability Assessment”
+                    eseguita sulla rete interna del cliente.</p>
+                <h3 id="assessmentTitle" style="color: #27368c;">VULNERABILTY ASSESSMENT</h3>
+                <hr style="border: 1px solid #27368c;" />
+                <p id="assessmentDescription">Per “Vulnerability Assessment”, da qui in poi definito come “VA”, si
+                    intende
+                    il processo di individuazione, identificazione e classificazione delle vulnerabilità di un
+                    sistema...
+                </p>
+                <h3 id="methodologyTitle" style="color: #27368c;">METODOLOGIA UTILZZATA</h3>
+                <hr style="border: 1px solid #27368c;" />
+                <p id="methodologyDescription">Per quanto riguarda l’esecuzione dei test esistono principalmente due
+                    tecniche di scansione definite rispettivamente:</p>
+                <ul id="methodologyList">
+                    <li>Test White Box</li>
+                    <li>Test Black Box</li>
+                </ul>
+                <p id="methodologyDetails">Entrambi hanno il medesimo obiettivo cioè quello di individuare le
+                    vulnerabilità
+                    presenti sui sistemi target generando un report contenente le remediations...</p>
+            </div>
+            <!-- Page 3 -->
+            <div>
+                <h1 style="text-align: center;">This is page 3</h1>
+                <h3 id="cvssTitle" style="color: #27368c;">CVSS V3.0 (COMMON VULNERABILITY SCORING SYSTEM)</h3>
+                <hr style="border: 1px solid #27368c;" />
+                <p id="cvssDescription">Il Common Vulnerability Scoring System (CVSS) fornisce un framework per
+                    determinare
+                    le principali caratteristiche intrinseche di una vulnerabilità...</p>
+                <table id="cvssTable" style="border: 1px solid black; border-collapse: collapse;">
+                    <tr style="background-color: #27368c;">
+                        <th style="border: 1px solid black; width: 13%; color: white; padding: 1%;">SEVERITY</th>
+                        <th style="border: 1px solid black; width: 10%; color: white;"> CVSS v3 </th>
+                        <th style="border: 1px solid black; width: 70%; color: white;">DESCRIZIONE </th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid black; color: #a1283e;">CRITICAL</th>
+                        <th style="border: 1px solid black; color: #a1283e;">9.0 - 10</th>
+                        <th style="border: 1px solid black; text-align: left; padding: 1%; ">
+                            Le vulnerabilità che rientrano nell'intervallo “CRITICAL” generalmente presentano le
+                            seguenti
+                            caratteristiche:
+                            <ul>
+                                <li>Lo sfruttamento della vulnerabilità comporta una compromissione completa del sistema
+                                    target. L’attaccante ha accesso a tutti i dati presenti sul sistema.</li>
+                                <li>Lo sfruttamento della vulnerabilità comporta una compromissione completa del sistema
+                                    target. L’attaccante ha accesso a tutti i dati presenti sul sistema.</li>
+                                <li>La vulnerabilità è semplice da sfruttare, l’attaccante non necessità di condizioni
+                                    particolari per essere sfruttata.</li>
+                            </ul>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid black; color: #dd4b51;">HIGH</th>
+                        <th style="border: 1px solid black; color: #dd4b51;">7.0 - 8.9</th>
+                        <th style="border: 1px solid black; text-align: left; padding: 1%; ">
+                            Le vulnerabilità che rientrano nell'intervallo “HIGH” generalmente presentano le seguenti
+                            caratteristiche:
+                            <ul>
+                                <li>La vulnerabilità è difficile da sfruttare, l’attaccante necessità di condizioni
+                                    particolari per eseguire l’attacco (es. elevate competenze informatiche, essere in
+                                    possesso delle credenziali di un utente).</li>
+                                <li>Sfruttando la vulnerabilità l’attaccante potrebbe acquisire privilegi elevati.</li>
+                                <li>Lo sfruttamento potrebbe comportare una significativa perdita di dati o rendere
+                                    indisponibili i servizi (Denial of Service).</li>
+                            </ul>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid black; color: #efa344;">MEDIUM</th>
+                        <th style="border: 1px solid black; color: #efa344;">4.0 - 6.9</th>
+                        <th style="border: 1px solid black; text-align: left; padding: 1%; ">
+                            Le vulnerabilità che rientrano nell'intervallo “MEDIUM” generalmente presentano le seguenti
+                            caratteristiche:
+                            <ul>
+                                <li>La vulnerabilità necessità di particolari condizioni per poter essere sfruttata (es.
+                                    essere in possesso delle credenziali di un utente).</li>
+                                <li>Per sfruttare la vulnerabilità l'aggressore deve avere accesso alla stessa rete
+                                    locale
+                                    della vittima.</li>
+                                <li>Lo sfruttamento della vulnerabilità fornisce all’aggressore accessi o privilegi
+                                    molto
+                                    limitati.</li>
+                            </ul>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid black; color: #f4c851;">LOW</th>
+                        <th style="border: 1px solid black; color: #f4c851;">0.1 - 3.9</th>
+                        <th style="border: 1px solid black; text-align: left; padding: 1%; ">
+                            Le vulnerabilità che rientrano nell'intervallo “LOW” in genere hanno un impatto minimo
+                            sull'operatività di un'organizzazione.
+                            <ul>
+                                <li>Lo sfruttamento di queste vulnerabilità richiede solitamente l’accesso al sistema
+                                    locale
+                                    o fisico.</li>
+                                <li>La vulnerabilità consente ad un aggressore di ottenere informazioni, non sensibili,
+                                    ma
+                                    che potrebbero essere utili per pianificare successivi attacchi.</li>
+                            </ul>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <!-- page 4 -->
+            <div>
+                <h1 style="text-align: center;">This is page 4</h1>
+                <h3 id="cvssTitle" style="color: #27368c;">EXECUTIVE SUMMARY</h3>
+                <hr style="border: 1px solid #27368c;" />
+                <h1 style="    color: #27368c;
+            font-size: 14px;
+            letter-spacing: 0.5px;">DETTAGLI SCANSIONE
+                </h1>
+                <p>In questo paragrafo sono riportate delle statistiche di scansione. </p>
+                <div style="display: flex; gap: 5%;justify-content: center;">
+                    <div style="width: 20%;">
+                        <div style="border: 1px solid black; font-size: 12px;padding:5% 6% 5% 9%;text-align: center;">
+                            DATA
+                            SCANSIONE
+                        </div>
+                        <div
+                            style="border: 1px solid black; text-align: center; font-size: 25px;color: #ffffff; background-color: #27368c;padding:7% 9% 7% 7%">
+                            26/06/2024
+                        </div>
+                    </div>
+                    <div style="width: 20%;">
+                        <div style="border: 1px solid black; font-size: 12px;padding:5% 6% 5% 9%;text-align: center;">
+                            ORA
+                            SCANSIONE
+                        </div>
+                        <div
+                            style="border: 1px solid black; text-align: center; font-size: 25px;color: #ffffff; background-color: #27368c;padding:7% 9% 7% 7%">
+                            13:07:50
+                        </div>
+                    </div>
+                    <div style="width: 20%;">
+                        <div style="border: 1px solid black; font-size: 12px;padding:5% 6% 5% 9%;text-align: center;">
+                            NUMERO
+                            HOSTS
+                        </div>
+                        <div
+                            style="border: 1px solid black; text-align: center; font-size: 25px;color: #ffffff; background-color: #27368c;padding:7% 9% 7% 7%">
+                            61
+                        </div>
+                    </div>
+                </div>
+                <h1 style="    color: #27368c;
+            font-size: 14px;
+            letter-spacing: 0.5px;">
+                    VULNERABILITA’ INDIVIDUATE
+                </h1>
+                <p>Di seguito il numero totale di vulnerabilità, individuate all’interno della rete di [NOME AZIENDA],
+                    suddivise per “Severity” (CRITICAL, HIGH, MEDIUM, LOW).</p>
+                <div style="display: flex; gap: 25%;justify-content: center;">
+                    <div style=" width: 27%;">
+                        <div style="display: grid;
+                    grid-template-columns: 1fr 1fr;">
+
+                            <div style="border: 1px solid black; font-size: 12px;padding:5% 6% 5% 9%;
+                        text-align: center;">
+                                <img src="./Images/2.png" alt="Paris">
+                            </div>
+                            <div style="    border: 1px solid black;
+                        text-align: center;
+                        font-size: 29px;
+                        font-weight: bolder;
+                        color: #ffffff;
+                        background-color: #981d32;
+                        padding: 13% 9% 7% 7%;
+                        width: 82%;
+                        letter-spacing:.08cm">
+                                XX
+                            </div>
+                        </div>
+                        <div style="border: 1px solid black; text-align: center; font-size: 11px;
+                     padding:7% 9% 7% 7%;letter-spacing: 0.5px;">
+
+                            CRITICAL VULNERABILITIES
+                        </div>
+                    </div>
+                    <div style=" width: 27%;">
+                        <div style="display: grid;
+                    grid-template-columns: 1fr 1fr;">
+
+                            <div style="border: 1px solid black; font-size: 12px;padding:5% 6% 5% 9%;
+                        text-align: center;">
+                                <img src="./Images/1.png" alt="Paris">
+                            </div>
+                            <div style="    border: 1px solid black;
+                        text-align: center;
+                        font-size: 29px;
+                        font-weight: bolder;
+                        color: #ffffff;
+                        background-color: #e7424a;
+                        padding: 13% 9% 7% 7%;
+                        width: 82%;
+                        letter-spacing:.08cm">
+                                XX
+                            </div>
+                        </div>
+                        <div style="border: 1px solid black; text-align: center; font-size: 11px;
+                     padding:7% 9% 7% 7%;letter-spacing: 1px;">
+
+                            HIGH VULNERABILITIES
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 25%;justify-content: center;margin-top: 5%;">
+                    <div style=" width: 27%;">
+                        <div style="display: grid;
+                    grid-template-columns: 1fr 1fr;">
+
+                            <div style="border: 1px solid black; font-size: 12px;padding:5% 6% 5% 9%;
+                        text-align: center;">
+                                <img src="./Images/3.png" alt="Paris">
+                            </div>
+                            <div style="    border: 1px solid black;
+                        text-align: center;
+                        font-size: 29px;
+                        font-weight: bolder;
+                        color: #ffffff;
+                        background-color: #ea883d;
+                        padding: 13% 9% 7% 7%;
+                        width: 82%;
+                        letter-spacing:.08cm">
+                                XX
+                            </div>
+                        </div>
+                        <div style="border: 1px solid black; text-align: center; font-size: 11px;
+                     padding:7% 9% 7% 7%;letter-spacing: 0.7px;">
+
+                            MEDIUM VULNERABILITIES
+                        </div>
+                    </div>
+                    <div style=" width: 27%;">
+                        <div style="display: grid;
+                    grid-template-columns: 1fr 1fr;">
+
+                            <div style="border: 1px solid black; font-size: 12px;padding:5% 6% 5% 9%;
+                        text-align: center;">
+                                <img src="./Images/4.png" alt="Paris">
+                            </div>
+                            <div style="    border: 1px solid black;
+                        text-align: center;
+                        font-size: 29px;
+                        font-weight: bolder;
+                        color: #ffffff;
+                        background-color: #f3c146;
+                        padding: 13% 9% 7% 7%;
+                        width: 82%;
+                        letter-spacing:.08cm">
+                                XX
+                            </div>
+                        </div>
+                        <div style="border: 1px solid black; text-align: center; font-size: 11px;
+                     padding:7% 9% 7% 7%;letter-spacing: 0.7px;">
+
+                            LOW VULNERABILITIES
+
+                        </div>
+                    </div>
+                </div>
+                <h1 style="color: #27368c;
+            font-size: 14px;
+            letter-spacing: 0.5px;">
+                    1.1.1<span style="margin-left: 2%;"></span> DISTRIBUZIONE VULNERABILITA’
+
+                </h1>
+                <p>Di seguito viene riportata la distribuzione, in percentuale, delle vulnerabilità suddivise per
+                    “Severity”
+                    CRITICAL, HIGH, MEDIUM, LOW.</p>
+            </div>
+            <!-- page 5 -->
+
+            <div>
+                <h1 style="text-align: center;">This is page 5</h1>
+
+                <!-- pie chart -->
+                <div class="container">
+                    <div style="width: 400px; height: 400px; padding: 20px;">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <div id="chartDataContainer" class="hidden"></div>
+                </div>
+
+                <h1 style="color: #27368c;
+            font-size: 14px;
+            letter-spacing: 0.5px;">TOP 10 VULNERABILITA’ RICORRENTI
+                </h1>
+                <p>Nella tabella di seguito vengono riportate le 10 Vulnerabilità con maggior frequenza.</p>
+
+                <!-- table -->
+
+                <table class="tb1">
+                    <thead>
+                        <tr>
+                            <th>
+                                <mark>
+                                    SEVERITY
+                                </mark>
+                            </th>
+                            <th>
+                                <mark>
+                                    CVSS
+                                </mark>
+                            </th>
+                            <th colspan="6">
+                                <mark>
+                                    NOME
+                                </mark>
+                            </th>
+                            <th>
+                                <mark>
+                                    TOT
+                                </mark>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #ea883d;
+                          color: #ffffff;
+                          border-radius: 5px;
+                          padding: 4%;
+                          width: 100%;">
+                                    MEDIUM
+                                </div>
+
+                            </td>
+                            <td>
+                                <mark>
+                                    6.5
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left;">
+                                <mark>
+
+                                    SSL Certificate Cannot Be Trusted
+                            </td>
+                            </mark>
+                            <td>
+                                <mark>
+                                    64
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #ea883d;
+                            color: #ffffff;
+                            border-radius: 5px;
+                            padding: 4%;
+                            width: 100%;">
+                                    MEDIUM
+                                </div>
+                            </td>
+                            <td>
+                                <mark>
+                                    6.5
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left">
+                                <mark>
+
+                                    TLS Version 1.0 Protocol Detection
+                            </td>
+                            </mark>
+                            <td>
+                                <mark>
+                                    56
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #ea883d;
+                            color: #ffffff;
+                            border-radius: 5px;
+                            padding: 4%;
+                            width: 100%;">
+                                    MEDIUM
+                                </div>
+                            </td>
+                            <td>
+                                <mark>
+                                    6.5
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left">
+                                <mark>
+
+                                    SSL Self-Signed Certificate
+                            </td>
+                            </mark>
+                            <td>
+                                <mark>
+                                    51
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #ea883d;
+                            color: #ffffff;
+                            border-radius: 5px;
+                            padding: 4%;
+                            width: 100%;">
+                                    MEDIUM
+                                </div>
+                            </td>
+                            <td>
+                                <mark>
+                                    6.5
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left">
+                                <mark>
+
+                                    TLS Version 1.1 Protocol Deprecated
+                            </td>
+                            </mark>
+                            <td>
+                                <mark>
+                                    49
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #e7424a;
+                          color: #ffffff;
+                          border-radius: 5px;
+                          padding: 4%;
+                          width: 100%;">
+                                    HIGH
+                                </div>
+                            </td>
+                            <td>
+                                <mark>
+                                    7.5
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left">
+                                <mark>
+
+                                    SSL Medium Strength Cipher Suites Supported (SWEET32)
+                            </td>
+                            </mark>
+                            <td>
+                                <mark>
+                                    48
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #981d32;
+                          color: #ffffff;
+                          border-radius: 5px;
+                          padding: 4%;
+                          width: 100%;">
+                                    CRITICAL
+                                </div>
+                            </td>
+                            <td>
+                                <mark>
+                                    9.8
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left">
+                                <mark>
+
+                                    SSL Version 2 and 3 Protocol Detection
+                            </td>
+                            </mark>
+                            <td>
+                                <mark>
+                                    30
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #ea883d;
+                            color: #ffffff;
+                            border-radius: 5px;
+                            padding: 4%;
+                            width: 100%;">
+                                    MEDIUM
+                                </div>
+                            </td>
+                            <td>
+                                <mark>
+                                    5.9
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left">
+                                <mark>
+
+                                    SSL RC4 Cipher Suites Supported (Bar Mitzvah)
+                            </td>
+                            </mark>
+                            <td>
+                                <mark>
+                                    25
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #ea883d;
+                            color: #ffffff;
+                            border-radius: 5px;
+                            padding: 4%;
+                            width: 100%;">
+                                    MEDIUM
+                                </div>
+                            </td>
+                            <td>
+                                <mark>
+                                    5.3
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left">
+                                <mark>
+
+                                    SMB Signing not required
+                            </td>
+                            </mark>
+                            <td>
+                                <mark>
+                                    17
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #ea883d;
+                            color: #ffffff;
+                            border-radius: 5px;
+                            padding: 4%;
+                            width: 100%;">
+                                    MEDIUM
+                                </div>
+                            </td>
+                            <td>
+                                <mark>
+                                    5.3
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left">
+                                <mark>
+
+                                    SSL Certificate Expiry
+                            </td>
+                            </mark>
+                            <td>
+                                <mark>
+                                    14
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style=" background-color: #ea883d;
+                            color: #ffffff;
+                            border-radius: 5px;
+                            padding: 4%;
+                            width: 100%;">
+                                    MEDIUM
+                                </div>
+                            </td>
+                            <td>
+                                <mark>
+                                    4.0
+                                </mark>
+                            </td>
+                            <td colspan="6" style="text-align: left;">
+                                <mark>
+
+                                    Terminal Services Doesn't Use Network Level Authentication (NLA) Only
+                                </mark>
+                            </td>
+                            <td>
+                                <mark>
+                                    12
+                                </mark>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="font-size: 10px;">
+                    <span style=" text-decoration: underline;text-underline-offset: 3px;">Nota:</span> Per quanto
+                    riguarda
+                    il calcolo totale delle vulnerabilità queste non sono univoche.<br>
+                </p>
+                <p style="font-size: 10px;">
+                    Esempio: Se un host espone lo stesso servizio su 2 porte, ed esso risulta vulnerabile, in questo
+                    caso
+                    avremo che il totale è uguale a 2.
+                </p>
+            </div>
+            <!-- page 6-->
+            <h1 style="text-align: center;">This is page 6</h1>
+            <h1 style="color: #27368c;
+            font-size: 14px;
+            letter-spacing: 0.5px;">
+                TOP 10 HOST VULNERABILI
+            </h1>
+            <p>
+                <mark>
+                    Nel grafico di seguito sono riportati i dieci Host con maggior numero di Vulnerabilità:
+                </mark>
+            </p>
+            <!-- stacked chart -->
+
+            <div id="content" style="border: 1px solid blue;">
+                <div style="width: 700px; height: 400px; padding: 20px;">
+                    <canvas id="myHorizontalStackedBarChart"></canvas>
+                </div>
+                <div id="chartInputs" class="hidden"></div>
+                <!-- page 7 -->
+                <div>
+                    <h1 style="text-align: center;">This is page 7</h1>
+                    <h1 style="color: #27368c;
+                 font-size: 14px;
+                 letter-spacing: 0.5px;">VULNERABILITA’ CRITICHE
+                    </h1>
+                    <p>In questo capitolo vengono riportate le vulnerabilità ad alta criticità in termini di sicurezza
+                        dei
+                        sistemi.
+                        E’ importante dunque prenderne visione ed applicare, nel minor tempo possibile, le opportune
+                        “remediation”.
+                    </p>
+                    <p style="font-weight: bold;">
+                        <mark>
+                            NOME VULNERABILITA 1
+                        </mark>
+                    </p>
+                    <p>
+                        <mark>
+                            <span style="font-weight: bold;">
+                                Descrizione:
+                            </span> SI PUO’ RICAVARE LA DESCRIZIONE???.
+                        </mark>
+                    </p>
+                    <p>
+                        <mark>
+                            <span style="font-weight: bold;">
+                                Soluzione:
+                            </span> SDI PUO’ RICAVARE IL WORK AROUND.
+                        </mark>
+                    </p>
+
+
+                    <!-- NOME VULNERABILITA 1 table  -->
+                    <table class="tb2">
+                        <tr>
+                            <td>Attributi coinvolti </td>
+                            <td colspan="3">
+                                <mark>
+                                    Servizio Telnet
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Rischio</td>
+                            <td colspan="3" style="font-weight: bold;">
+                                <mark>
+                                    <span style="color: #981d32;">
+                                        CRITICAL
+                                    </span>
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CVSSv3</td>
+                            <td colspan="3" style="font-weight: bold; ">
+                                <mark>
+                                    <span style="color: #981d32;">
+                                        10
+                                    </span>
+                                </mark>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CVE</td>
+                            <td colspan="3">
+                                <mark>
+                                    <span style="text-decoration: underline; color:#0081AB;">
+                                        CVE-2001-0554
+                                    </span>
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Host Vulnerabili </td>
+                            <td colspan="3">
+                                <mark>
+                                    192.168.99.100
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Evidenze </td>
+                            <td colspan="3">
+                                <mark>
+                                    N.D.
+                                </mark>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p style="font-weight: bold;">
+                        <mark>
+                            NOME VULNERABILITA 2
+                        </mark>
+                    </p>
+                    <p>
+                        <mark>
+                            <span style="font-weight: bold;">
+                                Descrizione:
+                            </span> SI PUO’ RICAVARE LA DESCRIZIONE???.
+                        </mark>
+                    </p>
+                    <p>
+                        <mark>
+                            <span style="font-weight: bold;">
+                                Soluzione:
+                            </span> SDI PUO’ RICAVARE IL WORK AROUND.
+                        </mark>
+                    </p>
+
+                    <!-- NOME VULNERABILITA 2 table  -->
+                    <table class="tb2">
+                        <tr>
+                            <td>Attributi coinvolti </td>
+                            <td colspan="3">
+                                <mark>
+                                    Servizio Telnet
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Rischio</td>
+                            <td colspan="3" style="font-weight: bold;">
+                                <mark>
+                                    <span style="color: #981d32;">
+                                        CRITICAL
+                                    </span>
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CVSSv3</td>
+                            <td colspan="3" style="font-weight: bold; ">
+                                <mark>
+                                    <span style="color: #981d32;">
+                                        10
+                                    </span>
+                                </mark>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CVE</td>
+                            <td colspan="3">
+                                <mark>
+                                    <span style="text-decoration: underline; color:#0081AB;">
+                                        CVE-2001-0554
+                                    </span>
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Host Vulnerabili </td>
+                            <td colspan="3">
+                                <mark>
+                                    192.168.99.100
+                                </mark>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Evidenze </td>
+                            <td colspan="3">
+                                <mark>
+                                    N.D.
+                                </mark>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- last page -->
+                <div>
+                    <h1 style="text-align: center;">Last page</h1>
+                    <h3 id="scopeTitle" style="color: #27368c;">CONCLUSIONI</h3>
+                    <hr style="border: 1px solid #27368c;" />
+                    <p id="scopeDescription">L’attività di Vulnerability Assessment ha evidenziato la presenza di
+                        numerose
+                        criticità, in termini di
+                        sicurezza informatica, sui sistemi sottoposti a scansione. All’interno di questo documento sono
+                        state
+                        riportate quelle ad alta criticità.
+                    </p>
+                    <p>
+                        Per le vulnerabilità con Severity <span style="color: #981d32;font-weight: bold;">“CRITICAL”
+                        </span>
+                        consigliamo di intraprendere le azioni di risoluzione o
+                        mitigation nel minor tempo possibile. La presenza di queste vulnerabilità, nel caso di una
+                        compromissione di un sistema, faciliterebbe i movimenti laterali degli attaccanti su altri
+                        sistemi.
+                    </p>
+                    <p>
+                        A tal proposito, per individuare tali movimenti laterali, si consiglia l’inserimento sulla rete
+                        di
+                        un
+                        sistema <span style="font-weight: bold;">“Honeypot”.</span> Gli honeypot (letteralmente:
+                        "barattolo
+                        del miele") sono dei sistemi utilizzati
+                        come esca per individuare, all’interno di una rete aziendale, proprio i movimenti laterali
+                        eseguiti
+                        da
+                        un utente malintenzionato. Un sistema honeypot è rappresentato comunemente da un server in cui
+                        sono configurati dei servizi volutamente vulnerabili e quindi molto appetibili per un eventuale
+                        aggressore. Tenendo monitorato quello che accade su questo sistema è possibile individuare
+                        tempestivamente la presenza di un attaccante all’interno della rete.
+                    </p>
+                    <p>
+                        Si consiglia, inoltre, la progettazione di una rete che preveda una segmentazione tra reti di
+                        frontend e reti di back-end. Nella rete di front-end devono essere configurate le interfacce di
+                        rete
+                        sulle
+                        quali vengono erogati i servizi utilizzati dagli utenti, mentre sul back-end devono essere
+                        configurate
+                        le interfacce utilizzate per l'amministrazione o la manutenzione del server.
+                    </p>
+                    <p>
+                        Sulle reti oggetto di scansione sono stati individuati numerose tipologie si sistemi che erogano
+                        a
+                        loro
+                        volta molteplici servizi di vario genere quali ad esempio Web Services, Database, NAS, Sistemi
+                        SIP/VoIP e apparati di rete. In questi casi è molto difficile tenere sotto controllo i sistemi,
+                        in
+                        termini
+                        di sicurezza, per individuare tempestivamente tutte le nuove vulnerabilità che potrebbero
+                        nascere
+                        nel tempo e causare problemi sui sistemi in caso di un attacco informatico. A tal proposito si
+                        consigliano servizi di monitoraggio dei sistemi tramite<span style="font-weight: bold;"> “EDR”
+                            (Endpoint Detection and Response)</span>
+                        e/o servizi di<span style="font-weight: bold;">“Vulnerability Management”</span> per scansione
+                        periodiche dei sistemi in modalità White
+                        Box
+                    </p>
+                    <p>
+                        Per quanto riguarda la raggiungibilità dei servizi interni o per la navigazione Internet,
+                        tramite
+                        dispositivi portatili (PC, Smart Phone, Tablet), al fine di garantire agli utenti una maggior
+                        sicurezza,
+                        come indicato dall’ingegnere Ghioldi, si consiglia l’implementazione di una rete<span
+                            style="font-weight: bold;">“WiFi Guest”</span>
+                        (attualmente non presente) che permetta una navigazione sicura quando si utilizza questo tipo di
+                        connessione.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="scripts.js"></script>
+
+</html>
